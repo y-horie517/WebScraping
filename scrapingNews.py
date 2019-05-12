@@ -51,17 +51,18 @@ categories = {'主要':'',
 
 f = open('topics.txt', 'a')   # 書き込みモードで開く
 
+# 実行時間
 dt_now = datetime.datetime.now()
 print('実行日時：')
 print(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
 f.write('\n実行日時：')
 f.write(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
 
+# ディクショナリの値を代入してスクレイピング
 for i in categories:
     scrapeNews(categories[i], i)
 
-f.close()  
-
+f.close()
 
 
 
