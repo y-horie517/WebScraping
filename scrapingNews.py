@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+import datetime
+
 # 引数はニュースカテゴリ名とそのパスの末尾
 def scrapeNews(path: str, category: str):
     # ページの情報を格納
@@ -20,12 +22,20 @@ def scrapeNews(path: str, category: str):
     print(url + path)
     print('---------------------------------')
 
+    f.write('\n' + category + 'トピックス')
+    f.write('\n' + url + path)
+    f.write('\n---------------------------------')
+
     # 各ニュース見出しのクラス指定
     news = soup.find_all("li",class_="topicsListItem")
     for n in news:
         print(n.text)
+        f.write('\n' + n.text)
     print('---------------------------------')
     print()
+    f.write('\n ---------------------------------')
+    f.write("\n")
+
 
 # カテゴリ名とパスの末尾部分をディクショナリに格納
 categories = {'主要':'',
@@ -39,9 +49,18 @@ categories = {'主要':'',
               '地域':'local'
             }
 
+f = open('topics.txt', 'a')   # 書き込みモードで開く
+
+dt_now = datetime.datetime.now()
+print('実行日時：')
+print(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
+f.write('\n実行日時：')
+f.write(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
 
 for i in categories:
     scrapeNews(categories[i], i)
+
+f.close()  
 
 
 
